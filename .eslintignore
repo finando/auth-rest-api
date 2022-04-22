@@ -1,0 +1,12 @@
+dist
+coverage
+node_modules
+
+.gitignore
+.dockerignore
+.eslintignore
+.huskyrc
+.lintstagedrc
+.vscode
+
+package-lock.json

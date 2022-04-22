@@ -1,0 +1,16 @@
+.DS_Store
+.env
+.envrc
+
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+
+npm-debug.log
+
+dist
+coverage
+node_modules

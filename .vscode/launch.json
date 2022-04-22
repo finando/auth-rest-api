@@ -1,0 +1,27 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug application",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "runtimeVersion": "16",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "serve:debug"
+      ],
+      "env": {
+        "NODE_ENV": "development",
+        "DEBUG": "oidc-provider:*",
+        "AWS_ACCESS_KEY_ID": "",
+        "AWS_SECRET_ACCESS_KEY": ""
+      },
+      "trace": true,
+      "outputCapture": "std",
+      "internalConsoleOptions": "openOnSessionStart",
+      "showAsyncStacks": true
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "src",
+    "target": "es6",
+    "module": "commonjs",
+    "lib": [
+      "esnext"
+    ],
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "downlevelIteration": true,
+    "strict": false,
+    "noImplicitAny": false,
+    "strictNullChecks": true,
+    "noImplicitThis": true,
+    "alwaysStrict": false,
+    "strictPropertyInitialization": false,
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "types": [
+      "node",
+      "jest"
+    ],
+    "typeRoots": [
+      "node_modules/@types",
+      "src/types/*"
+    ],
+    "paths": {
+      "@app/env": [
+        "env.ts"
+      ],
+      "@app/services": [
+        "services/index.ts"
+      ],
+      "@app/utils/*": [
+        "utils/*"
+      ],
+      "@app/types": [
+        "types/index.d.ts"
+      ],
+      "@app/enums": [
+        "types/enums.ts"
+      ],
+    },
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
