@@ -11,8 +11,8 @@ COPY --chown=app:app package.json ./
 FROM base AS build
 COPY --chown=app:app package-lock.json ./
 RUN npm set progress=false && npm config set depth 0
-RUN npm ci
-RUN npm audit --production --audit-level=moderate
+RUN npm ci --quiet --ignore-scripts
+RUN npm audit --omit=dev --audit-level=moderate
 COPY --chown=app:app tsconfig.json jest.config.js ./
 COPY --chown=app:app src ./src
 RUN npm test
