@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "repository": {
     "type": "git",
-    "url": "ssh://git@github.com:finando/auth-rest-api.git"
+    "url": "git@github.com:finando/auth-rest-api.git"
   },
   "author": {
     "name": "Alexander Zakharov (azaxarov)",
