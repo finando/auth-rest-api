@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/finando/auth-rest-api/compare/1.1.0...1.1.1) (2022-06-28)
+
+
+### Bug Fixes
+
+* change secret name format ([fa1d50a](https://github.com/finando/auth-rest-api/commit/fa1d50a097b637ba394231b3ca43a194555e187f))
+
 # [1.1.0](https://github.com/finando/auth-rest-api/compare/1.0.0...1.1.0) (2022-06-25)
 
 
