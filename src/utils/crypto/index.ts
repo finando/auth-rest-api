@@ -29,7 +29,7 @@ export const getCookieKeys = async (): Promise<string[]> => {
     } else {
       return JSON.parse(
         await secretsManager.getSecret(
-          `${realm}/${region}/${environment}/oidc-cookie-keys`
+          `${realm}-${region}-${environment}-oidc-cookie-keys`
         )
       );
     }
@@ -45,7 +45,7 @@ export const getJwks = async (): Promise<JWKS> => {
     } else {
       return JSON.parse(
         await secretsManager.getSecret(
-          `${realm}/${region}/${environment}/oidc-jwks`
+          `${realm}-${region}-${environment}-oidc-jwks`
         )
       );
     }
