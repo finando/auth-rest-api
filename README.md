@@ -49,7 +49,7 @@ Auth REST API is an OpenID Connect authorization server.
 - `AWS_ACCESS_KEY_ID` - AWS access key ID
 - `AWS_SECRET_ACCESS_KEY` - AWS secret access key
 - `AWS_REGION` - AWS region
-  - `eu-north-1` (default)
+  - `eu-west-1` (default)
 - `AWS_COGNITO_USER_POOL_ID` - AWS Cognito user pool ID
 - `AWS_COGNITO_USER_POOL_CLIENT_ID` - AWS Cognito user pool client ID
 - `OIDC_PROVIDER_DB_TABLE` - AWS DynamoDB table name to be used by the adapter

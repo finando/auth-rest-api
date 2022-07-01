@@ -4,7 +4,7 @@ export enum Environment {
 }
 
 export enum AwsRegion {
-  EU_NORTH_1 = 'eu-north-1'
+  EU_WEST_1 = 'eu-west-1'
 }
 
 export enum ApplicationPhase {

@@ -13,10 +13,10 @@ services:
       - REALM=finando
       - AWS_ACCESS_KEY_ID
       - AWS_SECRET_ACCESS_KEY
-      - AWS_REGION=eu-north-1
+      - AWS_REGION=eu-west-1
       - AWS_COGNITO_USER_POOL_ID
       - AWS_COGNITO_USER_POOL_CLIENT_ID
-      - OIDC_PROVIDER_DB_TABLE=finando-eu-north-1-development-oidc-provider
+      - OIDC_PROVIDER_DB_TABLE=finando-eu-west-1-development-oidc-provider
       - USE_DEV_INTERACTIONS=false
       - AUTH_INTERACTIONS_URL=http://0.0.0.0:8005
     networks:
