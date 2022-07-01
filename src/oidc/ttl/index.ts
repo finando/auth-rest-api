@@ -8,9 +8,9 @@ const ttl: Configuration['ttl'] = {
   BackchannelAuthenticationRequest: undefined,
   IdToken: 30,
   RefreshToken: 1209600,
-  Interaction: undefined,
-  Session: undefined,
-  Grant: undefined
+  Interaction: 3600,
+  Session: 1209600,
+  Grant: 1209600
 };
 
 export default ttl;
