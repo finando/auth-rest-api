@@ -1,3 +1,11 @@
+## [1.1.2](https://github.com/finando/auth-rest-api/compare/1.1.1...1.1.2) (2022-07-01)
+
+
+### Bug Fixes
+
+* change AWS region ([04d4adc](https://github.com/finando/auth-rest-api/commit/04d4adce4c15d8e5017d81554ed8e6d735731601))
+* define TTL configuration for Interaction, Session and Grant ([111ac9e](https://github.com/finando/auth-rest-api/commit/111ac9e3bd44909e87ab4e98fbd5b9e6cc440f99))
+
 ## [1.1.1](https://github.com/finando/auth-rest-api/compare/1.1.0...1.1.1) (2022-06-28)
 
 
