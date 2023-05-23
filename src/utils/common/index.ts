@@ -10,7 +10,7 @@ function assertIsDefined<T>(
   }
 }
 
-export const validateEnvironmentVariables = <T>(env: T): T => {
+export const validateEnvironmentVariables = <T extends object>(env: T): T => {
   Object.entries(env).forEach(([key, value]) => assertIsDefined(key, value));
 
   return env;
