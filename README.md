@@ -1,4 +1,4 @@
-# Auth REST API
+# Finando | Auth REST API
 
 [![semantic-release: conventionalcommits](https://img.shields.io/badge/semantic--release-conventionalcommits-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
 
@@ -22,9 +22,9 @@ Auth REST API is an OpenID Connect authorization server.
 #### Running application in a Docker container
 
 - Build a Docker container using the following command:
-  - `docker build -t auth-rest-api .`
+  - `docker build -t finando/auth-rest-api .`
 - Run the container using the following comand:
-  - `docker run -d -p 8004:8000 -e NODE_ENV -e HOST -e PORT -e ISSUER -e REALM -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY -e AWS_REGION -e AWS_COGNITO_USER_POOL_ID -e AWS_COGNITO_USER_POOL_CLIENT_ID -e OIDC_PROVIDER_DB_TABLE -e USE_DEV_INTERACTIONS -e AUTH_INTERACTIONS_URL auth-rest-api`
+  - `docker run -d -p 8004:8000 -e NODE_ENV -e HOST -e PORT -e ISSUER -e REALM -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY -e AWS_REGION -e AWS_COGNITO_USER_POOL_ID -e AWS_COGNITO_USER_POOL_CLIENT_ID -e OIDC_PROVIDER_DB_TABLE -e USE_DEV_INTERACTIONS -e AUTH_INTERACTIONS_URL finando/auth-rest-api`
 
 #### Running application using Docker Compose
 
