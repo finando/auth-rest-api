@@ -5,7 +5,7 @@ const { Prompt, Check } = interactionPolicy;
 export default new Prompt(
   {
     name: 'email_verification',
-    requestable: true
+    requestable: true,
   },
   () => ({}),
   new Check(
@@ -14,7 +14,8 @@ export default new Prompt(
     async ({ oidc: { session, result, entities } }) => {
       if (session?.accountId) {
         if (result) {
-          return !(result?.email_verification as Record<string, any>)?.verified;
+          return !(result?.email_verification as Record<string, unknown>)
+            ?.verified;
         }
 
         if (entities?.Account) {

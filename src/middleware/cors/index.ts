@@ -10,5 +10,5 @@ export default cors({
   origin: ({ headers: { origin } }) =>
     origin && origins[environment].includes(origin) ? origin : '',
   allowMethods: ['GET', 'POST'],
-  credentials: true
+  credentials: true,
 });

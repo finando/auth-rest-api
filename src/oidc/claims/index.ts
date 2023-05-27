@@ -26,11 +26,11 @@ const claims: Configuration['claims'] = {
     'profile',
     'updated_at',
     'website',
-    'zoneinfo'
+    'zoneinfo',
   ],
   session_state: null,
   sid: null,
-  typ: null
+  typ: null,
 };
 
 export default claims;

@@ -1,6 +1,6 @@
-import { SecretsManager, AWSError } from 'aws-sdk';
+import { SecretsManager, type AWSError } from 'aws-sdk';
 
-import { AwsRegion } from '@app/enums';
+import { type AwsRegion } from '@app/enums';
 import logger, { serviceTags } from '@app/utils/logging';
 
 const tags = [...serviceTags, 'secrets-manager'];
@@ -9,7 +9,7 @@ export default class SecretsManagerService {
   constructor(
     region: AwsRegion,
     private readonly secretsManager: SecretsManager = new SecretsManager({
-      region
+      region,
     })
   ) {}
 
@@ -34,7 +34,7 @@ export default class SecretsManagerService {
   }
 
   private handleError(error: AWSError): Error {
-    let message: string = 'An error occurred';
+    let message = 'An error occurred';
 
     if (error.code === 'DecryptionFailureException') {
       message = `Secrets Manager can't decrypt the protected secret text using the provided KMS key`;
@@ -51,7 +51,7 @@ export default class SecretsManagerService {
 
     logger.error(message, {
       tags: [...tags, 'error'],
-      error
+      error,
     });
 
     return error;

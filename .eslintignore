@@ -9,4 +9,9 @@ node_modules
 .lintstagedrc
 .vscode
 
+.eslintrc.json
+
+tsconfig.json
+
+package.json
 package-lock.json

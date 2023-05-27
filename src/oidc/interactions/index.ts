@@ -19,21 +19,21 @@ const interactions: Configuration['interactions'] = {
     }
 
     if (session?.accountId && entities?.Account) {
-      const { email_verified } = await entities.Account.claims(
+      const { email_verified: emailVerified } = await entities.Account.claims(
         'userinfo',
         '',
         {},
         []
       );
 
-      if ([false, 'false'].includes(email_verified as string)) {
+      if ([false, 'false'].includes(emailVerified as string)) {
         if (!prompts.has('signup')) {
           try {
             await cognito.sendConfirmationCode(session.accountId);
           } catch (error) {
             logger.error('Failed to send confirmation code to user', {
               tags: [...tags, 'email_verification', 'error'],
-              error
+              error,
             });
 
             return `${host}/error?reason=${InteractionErrorCode.VERIFICATION_CODE_SEND_FAILED}`;
@@ -49,7 +49,7 @@ const interactions: Configuration['interactions'] = {
     }
 
     return `${host}/sign-in?id=${uid}`;
-  }
+  },
 };
 
 export default interactions;

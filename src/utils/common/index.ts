@@ -1,5 +1,6 @@
+import { env } from 'process';
+
 import { Environment } from '@app/enums';
-import env from '@app/env';
 
 function assertIsDefined<T>(
   key: string,
@@ -10,10 +11,12 @@ function assertIsDefined<T>(
   }
 }
 
-export const validateEnvironmentVariables = <T extends object>(env: T): T => {
-  Object.entries(env).forEach(([key, value]) => assertIsDefined(key, value));
+export const validateEnvironmentVariables = <T extends object>(
+  envObj: T
+): T => {
+  Object.entries(envObj).forEach(([key, value]) => assertIsDefined(key, value));
 
-  return env;
+  return envObj;
 };
 
 export const isDevelopmentEnvironment = (): boolean =>

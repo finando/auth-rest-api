@@ -16,7 +16,7 @@ const clients: Configuration['clients'] = [
     post_logout_redirect_uris: [],
     token_endpoint_auth_method: 'none',
     isDevelopment: true,
-    isFirstParty: true
+    isFirstParty: true,
   },
   {
     realm,
@@ -29,8 +29,8 @@ const clients: Configuration['clients'] = [
     post_logout_redirect_uris: [],
     token_endpoint_auth_method: 'none',
     isDevelopment: false,
-    isFirstParty: true
-  }
+    isFirstParty: true,
+  },
 ];
 
 export default clients;

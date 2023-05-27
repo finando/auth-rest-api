@@ -14,7 +14,7 @@ const {
   AWS_COGNITO_USER_POOL_CLIENT_ID,
   OIDC_PROVIDER_DB_TABLE = `${REALM}-${AWS_REGION}-${NODE_ENV}-oidc-provider`,
   USE_DEV_INTERACTIONS = false,
-  AUTH_INTERACTIONS_URL = 'http://0.0.0.0:8005'
+  AUTH_INTERACTIONS_URL = 'http://0.0.0.0:8005',
 } = process.env;
 
 export default validateEnvironmentVariables({
@@ -33,5 +33,5 @@ export default validateEnvironmentVariables({
   AWS_COGNITO_USER_POOL_CLIENT_ID,
   OIDC_PROVIDER_DB_TABLE,
   USE_DEV_INTERACTIONS: ['true', true].includes(USE_DEV_INTERACTIONS),
-  AUTH_INTERACTIONS_URL
+  AUTH_INTERACTIONS_URL,
 });

@@ -9,7 +9,7 @@ export default async (): Promise<Configuration['cookies']> => ({
     interaction: 'OIDC_INTERACTION',
     resume: 'OIDC_INTERACTION_RESUME',
     session: 'OIDC_SESSION',
-    state: 'OIDC_STATE'
+    state: 'OIDC_STATE',
   },
   short: {
     httpOnly: true,
@@ -17,7 +17,7 @@ export default async (): Promise<Configuration['cookies']> => ({
     sameSite: 'lax',
     signed: true,
     secure: !isDevelopmentEnvironment(),
-    path: '/'
+    path: '/',
   },
   long: {
     httpOnly: true,
@@ -25,6 +25,6 @@ export default async (): Promise<Configuration['cookies']> => ({
     sameSite: 'none',
     signed: true,
     secure: !isDevelopmentEnvironment(),
-    path: '/'
-  }
+    path: '/',
+  },
 });

@@ -32,8 +32,8 @@ const features: Configuration['features'] = {
           ? AUTH_INTERACTIONS_URL
           : 'https://finando.app'
       );
-    }
-  }
+    },
+  },
 };
 
 export default features;

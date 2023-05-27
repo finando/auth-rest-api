@@ -2,7 +2,7 @@ import env from '@app/env';
 import { cognito } from '@app/services';
 import {
   isDevelopmentEnvironment,
-  isProductionEnvironment
+  isProductionEnvironment,
 } from '@app/utils/common';
 import logger, { serverConfigTags } from '@app/utils/logging';
 
@@ -23,7 +23,7 @@ import type { Configuration } from 'oidc-provider';
 const {
   NODE_ENV: environment,
   AUTH_INTERACTIONS_URL,
-  USE_DEV_INTERACTIONS
+  USE_DEV_INTERACTIONS,
 } = env;
 
 const tags = [...serverConfigTags, 'oidc'];
@@ -81,9 +81,9 @@ export default async (): Promise<Configuration> => ({
             birthdate: '1988-11-15',
             locale: 'en',
             email_verified: true,
-            phone_number_verified: false
+            phone_number_verified: false,
           };
-        }
+        },
       };
     }
 
@@ -103,13 +103,13 @@ export default async (): Promise<Configuration> => ({
             birthdate,
             locale,
             email_verified,
-            phone_number_verified
-          } = {}
+            phone_number_verified,
+          } = {},
         } = user;
 
         logger.info('Successfully found account', {
           tags: [...tags, 'find-account', 'success'],
-          sub
+          sub,
         });
 
         return {
@@ -127,9 +127,9 @@ export default async (): Promise<Configuration> => ({
               birthdate,
               locale,
               email_verified,
-              phone_number_verified
+              phone_number_verified,
             };
-          }
+          },
         };
       }
 
@@ -138,14 +138,14 @@ export default async (): Promise<Configuration> => ({
       logger.error('Error while trying to find account', {
         tags: [...tags, 'find-account', 'error'],
         sub,
-        error
+        error,
       });
 
       return {
         accountId: sub,
         async claims() {
           return { sub };
-        }
+        },
       };
     }
   },
@@ -153,7 +153,7 @@ export default async (): Promise<Configuration> => ({
     methods: ['S256'],
     required: function pkceRequired() {
       return true;
-    }
+    },
   },
   async extraTokenClaims() {
     return undefined;
@@ -164,5 +164,5 @@ export default async (): Promise<Configuration> => ({
 
       ctx.redirect(`${AUTH_INTERACTIONS_URL}/error`);
     }
-  }
+  },
 });

@@ -9,7 +9,7 @@ import {
   crossdomain,
   helmet,
   referrer,
-  router
+  router,
 } from './middleware';
 import configuration from './oidc';
 import { serverConfiguration, queueListener } from './plugins';
@@ -31,7 +31,7 @@ export default async () =>
     provider.on(ApplicationPhase.SERVER_START, queueListener);
 
     return provider;
-  })().then(provider => {
+  })().then((provider) => {
     provider.emit(ApplicationPhase.SERVER_START);
 
     return provider;

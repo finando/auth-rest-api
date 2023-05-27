@@ -8,8 +8,8 @@ export interface CognitoUser {
 }
 
 export interface SignInResponse {
-  sub: string;
-  emailVerified: boolean;
+  sub?: string;
+  emailVerified?: boolean;
 }
 
 export interface SignUpData {

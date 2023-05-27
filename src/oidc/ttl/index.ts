@@ -10,7 +10,7 @@ const ttl: Configuration['ttl'] = {
   RefreshToken: 1209600,
   Interaction: 3600,
   Session: 1209600,
-  Grant: 1209600
+  Grant: 1209600,
 };
 
 export default ttl;

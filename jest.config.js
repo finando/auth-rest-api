@@ -1,10 +1,10 @@
 module.exports = {
   globals: {
     'ts-jest': {
-      isolatedModules: true
-    }
+      isolatedModules: true,
+    },
   },
   preset: 'ts-jest',
   testEnvironment: 'node',
-  collectCoverageFrom: ['src/**/*.{ts,js}']
+  collectCoverageFrom: ['src/**/*.{ts,js}'],
 };

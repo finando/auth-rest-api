@@ -5,7 +5,7 @@ crypto.randomBytes(48, (_, buffer) =>
     JSON.stringify(
       [
         ...((process.env.KEYS && JSON.parse(process.env.KEYS)) || []),
-        buffer.toString('hex')
+        buffer.toString('hex'),
       ],
       null,
       2

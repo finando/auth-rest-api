@@ -52,7 +52,9 @@
     "skipLibCheck": true
   },
   "include": [
-    "src/**/*"
+    "src",
+    "bin",
+    "jest.config.js"
   ],
   "exclude": [
     "node_modules"

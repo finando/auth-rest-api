@@ -5,7 +5,7 @@ const { Prompt, Check } = interactionPolicy;
 export default new Prompt(
   {
     name: 'signup',
-    requestable: true
+    requestable: true,
   },
   () => ({}),
   new Check(

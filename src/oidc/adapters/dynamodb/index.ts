@@ -13,14 +13,14 @@ class DynamoDBAdapter {
       region,
       sslEnabled: isProductionEnvironment(),
       convertResponseTypes: false,
-      paramValidation: false
+      paramValidation: false,
     }),
     private readonly marshaller = new Marshaller({ unwrapNumbers: true })
   ) {}
 
   public async upsert(
     id: string,
-    payload: any,
+    payload: Record<string, string>,
     expiresIn: number
   ): Promise<void> {
     const key = this.key(id);
@@ -37,13 +37,13 @@ class DynamoDBAdapter {
 
     if (grantId) {
       const grantKey = this.grantKeyFor(grantId);
-      const grant = (await this.get(grantKey)).payload;
+      const grant = (await this.get<string>(grantKey))?.payload;
 
       await this.set(
         grantKey,
         {
           payload:
-            grant && Array.isArray(grant) ? [...grant.slice(-10), key] : [key]
+            grant && Array.isArray(grant) ? [...grant.slice(-10), key] : [key],
         },
         expiresIn
       );
@@ -63,13 +63,17 @@ class DynamoDBAdapter {
   public async findByUserCode(
     userCode: string
   ): Promise<Record<string, unknown> | undefined> {
-    return this.find((await this.get(this.userCodeKeyFor(userCode))).payload);
+    const id = (await this.get<string>(this.userCodeKeyFor(userCode)))?.payload;
+
+    return id ? this.find(id) : undefined;
   }
 
   public async findByUid(
     uid: string
   ): Promise<Record<string, unknown> | undefined> {
-    return this.find((await this.get(this.sessionUidKeyFor(uid))).payload);
+    const id = (await this.get<string>(this.sessionUidKeyFor(uid)))?.payload;
+
+    return id ? this.find(id) : undefined;
   }
 
   public async consume(id: string): Promise<void> {
@@ -84,7 +88,7 @@ class DynamoDBAdapter {
           TableName,
           Key: { id: marshalledId },
           UpdateExpression: 'set consumedAt = :consumedAt',
-          ExpressionAttributeValues: { ':consumedAt': marshalledConsumedAt }
+          ExpressionAttributeValues: { ':consumedAt': marshalledConsumedAt },
         })
         .promise();
     }
@@ -96,16 +100,18 @@ class DynamoDBAdapter {
 
   public async revokeByGrantId(grantId: string): Promise<void> {
     const grantKey = this.grantKeyFor(grantId);
-    const grant: string[] | undefined = (await this.get(grantKey)).payload;
+    const grant = (await this.get(grantKey))?.payload;
 
     if (grant && Array.isArray(grant)) {
-      grant.forEach(token => this.remove(token));
+      grant.forEach((token) => this.remove(token));
 
       this.remove(grantKey);
     }
   }
 
-  private async get(key: string): Promise<any> {
+  private async get<Payload, T extends object = { payload: Payload }>(
+    key: string
+  ): Promise<T | undefined> {
     const marshalledKey = this.marshaller.marshallValue(key);
 
     if (marshalledKey) {
@@ -113,28 +119,28 @@ class DynamoDBAdapter {
         .getItem({
           TableName,
           Key: {
-            id: marshalledKey
-          }
+            id: marshalledKey,
+          },
         })
         .promise();
 
       if (item) {
-        return this.marshaller.unmarshallItem(item);
+        return this.marshaller.unmarshallItem(item) as T;
       }
     }
 
     return undefined;
   }
 
-  private async set(key: string, value: any, ttl?: number): Promise<void> {
+  private async set<T>(key: string, value: T, ttl?: number): Promise<void> {
     await this.db
       .putItem({
         TableName,
         Item: this.marshaller.marshallItem({
           id: key,
           ...value,
-          expiresAt: ttl ? Math.floor(Date.now() / 1000) + ttl : undefined
-        })
+          expiresAt: ttl ? Math.floor(Date.now() / 1000) + ttl : undefined,
+        }),
       })
       .promise();
   }
@@ -147,8 +153,8 @@ class DynamoDBAdapter {
         .deleteItem({
           TableName,
           Key: {
-            id: marshalledKey
-          }
+            id: marshalledKey,
+          },
         })
         .promise();
     }

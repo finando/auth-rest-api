@@ -1,17 +1,17 @@
-import { CognitoIdentityServiceProvider, AWSError } from 'aws-sdk';
+import { CognitoIdentityServiceProvider, type AWSError } from 'aws-sdk';
 import { decodeJwt } from 'jose';
 
-import { AwsRegion } from '@app/enums';
+import { type AwsRegion } from '@app/enums';
 import logger, { serviceTags } from '@app/utils/logging';
 
-import { CustomUserAttribute } from './enums';
+import { type CustomUserAttribute } from './enums';
 
 import type {
   CognitoUser,
   SignInResponse,
   SignUpData,
   UpdateUserProfileParams,
-  RequestOptions
+  RequestOptions,
 } from './types';
 
 const tags = [...serviceTags, 'cognito'];
@@ -36,20 +36,20 @@ export default class CognitoService {
         .listUsers({
           UserPoolId: this.userPoolId,
           Filter: `${type || 'username'} = '${username}'`,
-          Limit: 1
+          Limit: 1,
         })
         .promise();
 
       if (user) {
         logger.info(`User found for username: ${username}`, {
-          tags: [...tags, 'success']
+          tags: [...tags, 'success'],
         });
 
         return this.mapObjectToUser(user);
       }
 
       logger.warn(`User not found for username: ${username}`, {
-        tags: [...tags, 'warning']
+        tags: [...tags, 'warning'],
       });
 
       return null;
@@ -70,22 +70,21 @@ export default class CognitoService {
           ClientId: this.clientId,
           AuthParameters: {
             USERNAME: username,
-            PASSWORD: password
-          }
+            PASSWORD: password,
+          },
         })
         .promise();
 
       if (AuthenticationResult?.IdToken) {
-        const {
-          sub,
-          email_verified: emailVerified = false
-        }: Record<string, any> = decodeJwt(AuthenticationResult.IdToken);
+        const { sub, email_verified: emailVerified = false } = decodeJwt(
+          AuthenticationResult.IdToken
+        );
 
         logger.info(`User with ID: ${sub} successfully authenticated`, {
-          tags: [...tags, 'success']
+          tags: [...tags, 'success'],
         });
 
-        return { sub, emailVerified };
+        return { sub, emailVerified: Boolean(emailVerified) };
       }
       throw new Error('Failed to authenticate user');
     } catch (error) {
@@ -97,7 +96,7 @@ export default class CognitoService {
     identifier: Username,
     password: Password,
     firstName,
-    lastName
+    lastName,
   }: SignUpData): Promise<string> {
     try {
       const { UserSub: id } = await this.cognito
@@ -108,22 +107,22 @@ export default class CognitoService {
           UserAttributes: [
             {
               Name: 'given_name',
-              Value: firstName
+              Value: firstName,
             },
             {
               Name: 'family_name',
-              Value: lastName
-            }
+              Value: lastName,
+            },
           ],
           UserContextData: {
-            EncodedData: ''
-          }
+            EncodedData: '',
+          },
         })
         .promise();
 
       if (id) {
         logger.info(`User with ID: ${id} successfully created`, {
-          tags: [...tags, 'success']
+          tags: [...tags, 'success'],
         });
 
         return id;
@@ -141,14 +140,14 @@ export default class CognitoService {
           ClientId: this.clientId,
           Username: username,
           UserContextData: {
-            EncodedData: ''
-          }
+            EncodedData: '',
+          },
         })
         .promise();
 
       if (data) {
         logger.info('Successfully sent confirmation code to user', {
-          tags: [...tags, 'success']
+          tags: [...tags, 'success'],
         });
       } else {
         throw new Error('Failed to send confirmation code to user');
@@ -166,14 +165,14 @@ export default class CognitoService {
           Username: username,
           ConfirmationCode: code,
           UserContextData: {
-            EncodedData: ''
-          }
+            EncodedData: '',
+          },
         })
         .promise();
 
       if (data) {
         logger.info('Successfully confirmed user registration', {
-          tags: [...tags, 'success']
+          tags: [...tags, 'success'],
         });
       } else {
         throw new Error('Failed to confirm user registration');
@@ -194,14 +193,14 @@ export default class CognitoService {
       picture: 'picture',
       gender: 'gender',
       birthdate: 'birthdate',
-      locale: 'locale'
+      locale: 'locale',
     };
 
     const attributes = Object.entries(params).reduce(
       (previous, [key, value]) => ({
         ...previous,
         ...(value &&
-          key in attributeMapping && { [attributeMapping[key]]: value })
+          key in attributeMapping && { [attributeMapping[key]]: value }),
       }),
       {}
     );
@@ -212,7 +211,7 @@ export default class CognitoService {
           .adminUpdateUserAttributes({
             UserPoolId: this.userPoolId,
             Username: username,
-            UserAttributes: this.marshallUserAttributes(attributes)
+            UserAttributes: this.marshallUserAttributes(attributes),
           })
           .promise();
 
@@ -220,7 +219,7 @@ export default class CognitoService {
           `Successfully updated user profile for user with ID: ${username}`,
           {
             tags: [...tags, 'success'],
-            ...options
+            ...options,
           }
         );
       }
@@ -238,7 +237,7 @@ export default class CognitoService {
       UserCreateDate: createdAt,
       UserLastModifiedDate: lastModifiedAt,
       Username: username,
-      UserStatus: status
+      UserStatus: status,
     } = user;
 
     const attributes = this.unmarshallUserAttributes(userAttributes);
@@ -251,11 +250,11 @@ export default class CognitoService {
   ): CognitoIdentityServiceProvider.AttributeListType {
     return Object.entries(attributes).map(([name, value]) => ({
       Name: this.customUserAttributes
-        .map(attribute => attribute.toString())
+        .map((attribute) => attribute.toString())
         .includes(name)
         ? `custom:${name}`
         : name,
-      Value: value
+      Value: value,
     }));
   }
 
@@ -265,7 +264,7 @@ export default class CognitoService {
     return attributes.reduce(
       (previous, { Name: name, Value: value }) => ({
         ...previous,
-        [name.startsWith('custom') ? name.replace('custom:', '') : name]: value
+        [name.startsWith('custom') ? name.replace('custom:', '') : name]: value,
       }),
       {}
     );
@@ -275,7 +274,7 @@ export default class CognitoService {
     logger.error(error.message, {
       tags: [...tags, 'error'],
       error,
-      ...options
+      ...options,
     });
 
     return error;

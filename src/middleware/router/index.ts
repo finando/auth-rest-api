@@ -1,13 +1,13 @@
 import Router from '@koa/router';
-import { Provider } from 'oidc-provider';
+import { type Provider } from 'oidc-provider';
 
 import { InteractionErrorCode } from '@app/enums';
 import env from '@app/env';
 import { cognito } from '@app/services';
 import logger, { routeTags } from '@app/utils/logging';
 
-import { body } from '..';
 import cookieSettings from '../../oidc/cookies';
+import body from '../body';
 
 const { AUTH_INTERACTIONS_URL: host, USE_DEV_INTERACTIONS } = env;
 
@@ -16,7 +16,9 @@ const interactionRouteTags = [...routeTags, 'interaction'];
 export default (provider: Provider) => {
   const router = new Router();
 
-  router.get('/favicon.ico', ctx => (ctx.respond = false));
+  router.get('/favicon.ico', (ctx) => {
+    ctx.respond = false;
+  });
 
   router.all('(.*)', async (ctx, next) => {
     await next();
@@ -31,7 +33,7 @@ export default (provider: Provider) => {
       prompt: { name: promptName, details },
       session,
       grantId,
-      params
+      params,
     } = await provider.interactionDetails(ctx.req, ctx.res);
 
     const client = await provider.Client.find(
@@ -40,7 +42,7 @@ export default (provider: Provider) => {
 
     logger.info('Submitting interaction', {
       tags: [...interactionRouteTags, 'submit'],
-      prompt: promptName
+      prompt: promptName,
     });
 
     switch (promptName) {
@@ -60,7 +62,7 @@ export default (provider: Provider) => {
               accountId,
               {
                 ...(cookies?.long ?? {}),
-                sameSite: false
+                sameSite: false,
               }
             );
           }
@@ -72,8 +74,8 @@ export default (provider: Provider) => {
                 login: { accountId },
                 consent: {},
                 email_verification: {
-                  verified: emailVerified
-                }
+                  verified: emailVerified,
+                },
               },
               { mergeWithLastSubmission: false }
             );
@@ -83,7 +85,7 @@ export default (provider: Provider) => {
             try {
               logger.info('User is not confirmed - continue to verification', {
                 tags: [...interactionRouteTags, 'submit'],
-                prompt: promptName
+                prompt: promptName,
               });
 
               const user = await cognito.findUserByUsername(
@@ -101,8 +103,8 @@ export default (provider: Provider) => {
                     login: { accountId },
                     consent: {},
                     email_verification: {
-                      verified: false
-                    }
+                      verified: false,
+                    },
                   },
                   { mergeWithLastSubmission: false }
                 );
@@ -111,14 +113,14 @@ export default (provider: Provider) => {
               logger.error(error.message, {
                 tags: [...interactionRouteTags, 'submit', 'error'],
                 prompt: promptName,
-                error
+                error,
               });
             }
           }
           logger.error('Error submitting interaction', {
             tags: [...interactionRouteTags, 'submit', 'error'],
             prompt: promptName,
-            error
+            error,
           });
         }
 
@@ -129,7 +131,7 @@ export default (provider: Provider) => {
           (grantId && (await provider.Grant.find(grantId))) ||
           new provider.Grant({
             accountId: session?.accountId,
-            clientId: client?.clientId
+            clientId: client?.clientId,
           });
 
         if (details.missingOIDCScope) {
@@ -150,7 +152,7 @@ export default (provider: Provider) => {
           ctx.res,
           { consent: { grantId: await grant.save() } },
           {
-            mergeWithLastSubmission: true
+            mergeWithLastSubmission: true,
           }
         );
       }
@@ -162,7 +164,7 @@ export default (provider: Provider) => {
           if (!identifier) {
             logger.error('Invalid identifier', {
               tags: [...interactionRouteTags, 'submit', 'error'],
-              prompt: promptName
+              prompt: promptName,
             });
 
             return ctx.redirect(
@@ -173,7 +175,7 @@ export default (provider: Provider) => {
           if (password !== passwordRepeat) {
             logger.error('Password mismatch', {
               tags: [...interactionRouteTags, 'submit', 'error'],
-              prompt: promptName
+              prompt: promptName,
             });
 
             return ctx.redirect(
@@ -185,7 +187,7 @@ export default (provider: Provider) => {
             identifier,
             password,
             firstName,
-            lastName
+            lastName,
           });
 
           return accountId
@@ -194,15 +196,15 @@ export default (provider: Provider) => {
                 consent: {},
                 signup: { success: true },
                 email_verification: {
-                  verified: false
-                }
+                  verified: false,
+                },
               })
             : next();
         } catch (error) {
           if (error?.code === 'UsernameExistsException') {
             logger.error(error.message, {
               tags: [...interactionRouteTags, 'submit', 'error'],
-              error
+              error,
             });
 
             return ctx.redirect(
@@ -213,7 +215,7 @@ export default (provider: Provider) => {
           logger.error('Error submitting interaction', {
             tags: [...interactionRouteTags, 'submit', 'error'],
             prompt: promptName,
-            error
+            error,
           });
         }
 
@@ -237,8 +239,8 @@ export default (provider: Provider) => {
                 ctx.res,
                 {
                   email_verification: {
-                    verified: true
-                  }
+                    verified: true,
+                  },
                 },
                 { mergeWithLastSubmission: true }
               );
@@ -246,7 +248,7 @@ export default (provider: Provider) => {
 
             logger.error('Did not recieve verification code in request body', {
               tags: [...interactionRouteTags, 'submit', 'error'],
-              prompt: promptName
+              prompt: promptName,
             });
 
             return ctx.redirect(
@@ -257,7 +259,7 @@ export default (provider: Provider) => {
           if (!session) {
             logger.error('User session not found', {
               tags: [...interactionRouteTags, 'submit', 'error'],
-              prompt: promptName
+              prompt: promptName,
             });
 
             return ctx.redirect(
@@ -271,7 +273,7 @@ export default (provider: Provider) => {
             logger.error(error.message, {
               tags: [...interactionRouteTags, 'submit', 'error'],
               prompt: promptName,
-              error
+              error,
             });
 
             return ctx.redirect(
@@ -283,7 +285,7 @@ export default (provider: Provider) => {
             logger.error(error.message, {
               tags: [...interactionRouteTags, 'submit', 'error'],
               prompt: promptName,
-              error
+              error,
             });
 
             return ctx.redirect(
@@ -294,7 +296,7 @@ export default (provider: Provider) => {
           logger.error('Error submitting interaction', {
             tags: [...interactionRouteTags, 'submit', 'error'],
             prompt: promptName,
-            error
+            error,
           });
 
           return ctx.redirect(`${host}/error`);

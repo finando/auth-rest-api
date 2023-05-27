@@ -10,15 +10,15 @@ const { Console } = transports;
 export default createLogger({
   format: combine(
     timestamp({
-      format: 'YYYY-MM-DD HH:mm:ss.SSS'
+      format: 'YYYY-MM-DD HH:mm:ss.SSS',
     }),
     errors({ stack: true }),
     environment === Environment.PRODUCTION ? json() : prettyPrint()
   ),
   transports: [new Console()],
   defaultMeta: {
-    service: name
-  }
+    service: name,
+  },
 });
 
 export const serverTags: string[] = ['server'];

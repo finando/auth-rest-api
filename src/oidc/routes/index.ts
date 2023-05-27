@@ -8,7 +8,7 @@ const routes: Configuration['routes'] = {
   registration: '/reg',
   revocation: '/token/revoke',
   token: '/token',
-  userinfo: '/userinfo'
+  userinfo: '/userinfo',
 };
 
 export default routes;

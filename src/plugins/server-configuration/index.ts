@@ -5,6 +5,6 @@ const { ISSUER: issuer, NODE_ENV: environment } = env;
 
 export default () => {
   logger.info(`Issuer is set to ${issuer} in ${environment} mode`, {
-    tags: [...serverConfigTags, 'issuer']
+    tags: [...serverConfigTags, 'issuer'],
   });
 };

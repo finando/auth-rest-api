@@ -1,3 +1,3 @@
 export default {
-  common: ['openid', 'email', 'profile', 'offline_access']
+  common: ['openid', 'email', 'profile', 'offline_access'],
 };
