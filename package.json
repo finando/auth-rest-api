@@ -10,7 +10,7 @@
     "name": "Alexander Zakharov (azaxarov)",
     "email": "alzak@envisage.no"
   },
-  "license": "MIT",
+  "license": "UNLICENSED",
   "private": true,
   "engines": {
     "node": ">= 16.15.0"
