@@ -23,7 +23,6 @@
   "plugins": [
     "@typescript-eslint",
     "json",
-    "markdown",
     "prettier",
     "import"
   ],
