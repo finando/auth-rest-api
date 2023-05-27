@@ -1,4 +1,4 @@
-FROM node:alpine AS base
+FROM node:18-alpine AS base
 WORKDIR /app
 RUN addgroup -g 1001 -S app && \
   adduser -u 1001 -S app -G app && \

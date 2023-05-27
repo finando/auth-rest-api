@@ -9,7 +9,7 @@ Auth REST API is an OpenID Connect authorization server.
 ## Installation and Usage
 
 - Required tools to run this project:
-  - Node.js and npm to run locally on a host machine
+  - Node.js 18 and npm to run locally on a host machine
   - Docker and Docker Compose to run locally in a container
 
 #### Running application locally on a host machine

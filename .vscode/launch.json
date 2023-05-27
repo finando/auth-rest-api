@@ -6,7 +6,7 @@
       "type": "node",
       "request": "launch",
       "cwd": "${workspaceFolder}",
-      "runtimeVersion": "16",
+      "runtimeVersion": "18",
       "runtimeExecutable": "npm",
       "runtimeArgs": [
         "run",
