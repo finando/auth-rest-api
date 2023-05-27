@@ -34,12 +34,7 @@
     "test:jest": "jest --passWithNoTests",
     "test:jest:coverage": "jest --passWithNoTests --coverage",
     "test:watch": "jest --passWithNoTests --watchAll",
-    "commit": "git-cz"
-  },
-  "config": {
-    "commitizen": {
-      "path": "cz-conventional-changelog"
-    }
+    "commit": "cz"
   },
   "dependencies": {
     "@aws/dynamodb-auto-marshaller": "^0.7.1",
