@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/finando/auth-rest-api/compare/1.1.2...1.2.0) (2023-05-28)
+
+
+### Features
+
+* [#1](https://github.com/finando/auth-rest-api/issues/1) use Finando ESLint configuration ([048cf5a](https://github.com/finando/auth-rest-api/commit/048cf5af67623363a1e7e4e465b58cef0e536cad))
+
 ## [1.1.2](https://github.com/finando/auth-rest-api/compare/1.1.1...1.1.2) (2022-07-01)
 
 
