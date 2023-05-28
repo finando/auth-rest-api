@@ -1,3 +1,9 @@
+.DS_Store
+
+.github
+.husky
+.vscode
+
 dist
 coverage
 node_modules
@@ -5,13 +11,21 @@ node_modules
 .gitignore
 .dockerignore
 .eslintignore
-.huskyrc
 .lintstagedrc
 .vscode
-
+.cz.json
+.commitlintrc
+.npmrc
+.releaserc
 .eslintrc.json
-
 tsconfig.json
+
+Dockerfile
+docker-compose.yml
+entrypoint.sh
+
+README.md
+LICENSE
 
 package.json
 package-lock.json

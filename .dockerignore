@@ -1,18 +1,22 @@
-dist
-coverage
-node_modules
-
-npm-debug.log
-
 .DS_Store
-.dockerignore
+
+.github
+.husky
+.vscode
+
+coverage
+
 .gitignore
+.dockerignore
 .eslintignore
-.huskyrc
 .lintstagedrc
+.vscode
+.cz.json
+.commitlintrc
+.npmrc
+.releaserc
 .eslintrc.json
-.node-dev.json
-commitlint.config.js
+tsconfig.json
 
 **/.env
 
@@ -20,3 +24,4 @@ Dockerfile
 docker-compose.yml
 
 README.md
+LICENSE
