@@ -12,12 +12,6 @@
     ],
     "@semantic-release/release-notes-generator",
     [
-      "@semantic-release/exec",
-      {
-        "verifyReleaseCmd": "echo ${nextRelease.version} > .VERSION"
-      }
-    ],
-    [
       "@semantic-release/changelog",
       {
         "changelogFile": "CHANGELOG.md"

@@ -14,5 +14,3 @@ npm-debug.log
 dist
 coverage
 node_modules
-
-.VERSION
