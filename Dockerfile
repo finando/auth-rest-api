@@ -9,15 +9,9 @@ USER app:app
 COPY --chown=app:app package.json ./
 
 FROM base AS build
-COPY --chown=app:app package-lock.json ./
-RUN npm set progress=false && npm config set depth 0
-RUN npm ci --quiet --ignore-scripts
-RUN npm audit --omit=dev --audit-level=moderate
-COPY --chown=app:app tsconfig.json jest.config.js ./
-COPY --chown=app:app src ./src
-RUN npm test
-RUN npm run build
-RUN npm prune --production
+COPY --chown=app:app node_modules ./node_modules
+COPY --chown=app:app dist ./dist
+RUN npm prune --omit=dev
 
 FROM base
 COPY --chown=app:app --from=build /app/node_modules ./node_modules
