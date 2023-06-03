@@ -1,22 +1,34 @@
-name: Deploy
+name: Deploy to AWS ECR
 
 on:
-  workflow_run:
-    workflows:
-      - Release
-    types:
-      - completed
-    branches:
-      - master
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+      version:
+        required: false
+        type: string
+      region:
+        required: false
+        type: string
+        default: eu-west-1
+    secrets:
+      FINANDO_GITHUB_BOT_TOKEN:
+        required: true
+      AWS_ACCESS_KEY_ID:
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        required: true
 
 env:
   HUSKY: 0
 
 jobs:
-  deploy:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    name: Deploy
+  deploy-to-aws-ecr:
+    name: Deploy to ${{ inputs.environment }}
     runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -25,6 +37,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
+          cache: "npm"
+          cache-dependency-path: package-lock.json
 
       - name: Configure NPM authentication token for GitHub Packages
         run: npm set //npm.pkg.github.com/:_authToken ${{ secrets.FINANDO_GITHUB_BOT_TOKEN }}
@@ -35,31 +49,32 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Capture latest package version
-        run: echo "VERSION=$(git describe --abbrev=0 --tags)" >> $GITHUB_ENV
+      - name: Prune dependencies
+        run: npm prune --omit=dev
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-west-1
+          aws-region: ${{ inputs.region }}
 
       - name: Login to Amazon ECR
         id: ecr-login
         uses: aws-actions/amazon-ecr-login@v1
 
+      - name: Capture latest package version
+        if: ${{ inputs.version == '' }}
+        run: echo "VERSION=$(git describe --abbrev=0 --tags)" >> $GITHUB_ENV
+
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v4
-        env:
-          ECR_REGISTRY: ${{ steps.ecr-login.outputs.registry }}
-          ECR_REPOSITORY: auth-rest-api
         with:
           context: git
-          images: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}
+          images: ${{ steps.ecr-login.outputs.registry }}/${{ vars.ECR_REPOSITORY }}
           tags: |
-            type=semver,pattern={{version}},value=${{ env.VERSION }}
+            type=semver,pattern={{version}},value=${{ inputs.version || env.VERSION }}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
