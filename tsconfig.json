@@ -2,10 +2,10 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "src",
-    "target": "es6",
-    "module": "commonjs",
+    "target": "ESNext",
+    "module": "ESNext",
     "lib": [
-      "esnext"
+      "ESNext"
     ],
     "outDir": "dist",
     "esModuleInterop": true,
