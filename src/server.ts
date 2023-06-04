@@ -1,4 +1,4 @@
-import { Provider } from 'oidc-provider';
+import Provider from 'oidc-provider';
 
 import { ApplicationPhase } from '@app/enums';
 import env from '@app/env';

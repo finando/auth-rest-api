@@ -1,5 +1,4 @@
 import Router from '@koa/router';
-import { type Provider } from 'oidc-provider';
 
 import { InteractionErrorCode } from '@app/enums';
 import env from '@app/env';
@@ -8,6 +7,8 @@ import logger, { routeTags } from '@app/utils/logging';
 
 import cookieSettings from '../../oidc/cookies';
 import body from '../body';
+
+import type Provider from 'oidc-provider';
 
 const { AUTH_INTERACTIONS_URL: host, USE_DEV_INTERACTIONS } = env;
 
