@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/finando/auth-rest-api/compare/1.2.0...1.3.0) (2023-06-04)
+
+
+### Features
+
+* upgrade node-oidc provider to latest version ([9223b8b](https://github.com/finando/auth-rest-api/commit/9223b8bcf91923b908c058ef7b3403a7dea25209))
+
 # [1.2.0](https://github.com/finando/auth-rest-api/compare/1.1.2...1.2.0) (2023-05-28)
 
 
