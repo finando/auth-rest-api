@@ -11,7 +11,6 @@ COPY --chown=app:app package.json ./
 FROM base AS build
 COPY --chown=app:app node_modules ./node_modules
 COPY --chown=app:app dist ./dist
-RUN npm prune --omit=dev
 
 FROM base
 COPY --chown=app:app --from=build /app/node_modules ./node_modules
